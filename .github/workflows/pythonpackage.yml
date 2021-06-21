@@ -33,6 +33,7 @@ jobs:
         git submodule update --init --recursive
         git fetch --tags
         
+        pip install -r requirements.txt
         pip install -r test-requirements.txt
         TRAVIS=yes ./init-tests-after-clone.sh
         
