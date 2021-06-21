@@ -27,7 +27,7 @@ sys.path.insert(0, os.path.abspath('../..'))
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.doctest', 'sphinx_autodoc_typehints']
+extensions = ['sphinx.ext.autodoc', 'sphinx.ext.doctest']  # , 'sphinx_autodoc_typehints']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = []
@@ -170,8 +170,8 @@ htmlhelp_basename = 'gitpythondoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, document class [howto/manual]).
 latex_documents = [
-  ('index', 'GitPython.tex', ur'GitPython Documentation',
-   ur'Michael Trier', 'manual'),
+  ('index', 'GitPython.tex', 'GitPython Documentation',
+   'Michael Trier', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
