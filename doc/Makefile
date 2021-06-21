@@ -23,8 +23,6 @@ help:
 	@echo "  changes   to make an overview over all changed/added/deprecated items"
 	@echo "  linkcheck to check all external links for integrity"
 
-clean:
-	-rm -rf build/*
 
 html:
 	mkdir -p build/html build/doctrees
