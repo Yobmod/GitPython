@@ -1097,8 +1097,8 @@ class IterableObj(Protocol):
         out_list.extend(cls.iter_items(repo, *args, **kwargs))
         return out_list
 
-    @abstractmethod
     @classmethod
+    @abstractmethod
     def iter_items(cls, repo: 'Repo', *args: Any, **kwargs: Any
                    ) -> Iterator[T_IterableObj]:
         # return typed to be compatible with subtypes e.g. Remote

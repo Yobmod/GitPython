@@ -302,8 +302,8 @@ class Traversable(Protocol):
     """
     __slots__ = ()
 
-    @abstractmethod
     @classmethod
+    @abstractmethod
     def _get_intermediate_items(cls, item) -> Sequence['Traversable']:
         """
         Returns:
