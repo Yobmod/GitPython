@@ -4,6 +4,7 @@
 # This module is part of GitPython and is released under
 # the BSD License: http://www.opensource.org/licenses/bsd-license.php
 
+from abc import abstractmethod
 from .exc import InvalidGitRepositoryError
 import os.path as osp
 from .compat import is_win
@@ -28,7 +29,8 @@ import warnings
 # typing ---------------------------------------------------------
 
 from typing import (Any, AnyStr, BinaryIO, Callable, Dict, Generator, IO, Iterator, List,
-                    Optional, Pattern, Sequence, Tuple, TypeVar, Union, cast, TYPE_CHECKING, overload)
+                    Optional, Pattern, Protocol, Sequence, Tuple, TypeVar, Union, cast,
+                    TYPE_CHECKING, overload, runtime_checkable)
 
 import pathlib
 
@@ -1071,7 +1073,8 @@ class Iterable(object):
         raise NotImplementedError("To be implemented by Subclass")
 
 
-class IterableObj():
+@runtime_checkable
+class IterableObj(Protocol):
     """Defines an interface for iterable items which is to assure a uniform
     way to retrieve and iterate items within the git repository
 
@@ -1094,6 +1097,7 @@ class IterableObj():
         out_list.extend(cls.iter_items(repo, *args, **kwargs))
         return out_list
 
+    @abstractmethod
     @classmethod
     def iter_items(cls, repo: 'Repo', *args: Any, **kwargs: Any
                    ) -> Iterator[T_IterableObj]:

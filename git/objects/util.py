@@ -5,6 +5,7 @@
 # the BSD License: http://www.opensource.org/licenses/bsd-license.php
 """Module for general utility functions"""
 
+from abc import abstractmethod
 from git.util import (
     IterableList,
     IterableObj,
@@ -20,8 +21,8 @@ import calendar
 from datetime import datetime, timedelta, tzinfo
 
 # typing ------------------------------------------------------------
-from typing import (Any, Callable, Deque, Iterator, NamedTuple, overload, Sequence,
-                    TYPE_CHECKING, Tuple, Type, TypeVar, Union, cast)
+from typing import (Any, Callable, Deque, Iterator, NamedTuple, Protocol, overload, Sequence,
+                    TYPE_CHECKING, Tuple, Type, TypeVar, Union, cast, runtime_checkable)
 
 from git.types import Has_id_attribute, Literal
 
@@ -289,7 +290,8 @@ class ProcessStreamAdapter(object):
         return getattr(self._stream, attr)
 
 
-class Traversable(object):
+@runtime_checkable
+class Traversable(Protocol):
 
     """Simple interface to perform depth-first or breadth-first traversals
     into one direction.
@@ -313,6 +315,7 @@ class Traversable(object):
         """
         raise NotImplementedError("To be implemented in subclass")
 
+    @abstractmethod
     def list_traverse(self, *args: Any, **kwargs: Any) -> IterableList[Union['Commit', 'Submodule', 'Tree', 'Blob']]:
         """
         :return: IterableList with the results of the traversal as produced by
@@ -338,6 +341,7 @@ class Traversable(object):
         out.extend(self.traverse(*args, **kwargs))  # type: ignore
         return out
 
+    @abstractmethod
     def traverse(self,
                  predicate: Callable[[Union['Traversable', 'Blob', TraversedTup], int], bool] = lambda i, d: True,
                  prune: Callable[[Union['Traversable', 'Blob', TraversedTup], int], bool] = lambda i, d: False,
@@ -435,7 +439,8 @@ class Traversable(object):
         # END for each item on work stack
 
 
-class Serializable(object):
+@runtime_checkable
+class Serializable(Protocol):
 
     """Defines methods to serialize and deserialize objects from and into a data stream"""
     __slots__ = ()
@@ -454,7 +459,7 @@ class Serializable(object):
         raise NotImplementedError("To be implemented in subclass")
 
 
-class TraversableIterableObj(Traversable, IterableObj):
+class TraversableIterableObj(IterableObj, Traversable):
     __slots__ = ()
 
     TIobj_tuple = Tuple[Union[T_TIobj, None], T_TIobj]

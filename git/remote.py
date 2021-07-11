@@ -36,7 +36,7 @@ from .refs import (
 
 # typing-------------------------------------------------------
 
-from typing import Any, Callable, Dict, Iterator, List, Optional, Sequence, TYPE_CHECKING, Union, overload
+from typing import Any, Callable, Dict, Iterator, List, NoReturn, Optional, Sequence, TYPE_CHECKING, Union, overload
 
 from git.types import PathLike, Literal, TBD, TypeGuard, Commit_ish
 
@@ -227,6 +227,11 @@ class PushInfo(IterableObj, object):
         # END message handling
 
         return PushInfo(flags, from_ref, to_ref_string, remote, old_commit, summary)
+
+    @classmethod
+    def iter_items(cls, repo: 'Repo', *args: Any, **kwargs: Any
+                   ) -> NoReturn:  # -> Iterator['PushInfo']:
+        raise NotImplementedError
 
 
 class FetchInfo(IterableObj, object):
