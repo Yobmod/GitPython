@@ -322,7 +322,8 @@ class Traversable(Protocol):
         # Raise deprecation warning here, will change to NotImplemented
         return self._list_traverse(*args, **kwargs)
 
-    def _list_traverse(self, *args: Any, **kwargs: Any) -> IterableList[Union['Commit', 'Submodule', 'Tree', 'Blob']]:
+    def _list_traverse(self, as_edge=False, *args: Any, **kwargs: Any
+                       ) -> IterableList[Union['Commit', 'Submodule', 'Tree', 'Blob']]:
         """
         :return: IterableList with the results of the traversal as produced by
             traverse()
@@ -338,16 +339,18 @@ class Traversable(Protocol):
             id = ""     # shouldn't reach here, unless Traversable subclass created with no _id_attribute_
             # could add _id_attribute_ to Traversable, or make all Traversable also Iterable?
 
-        out: IterableList[Union['Commit', 'Submodule', 'Tree', 'Blob']] = IterableList(id)
-        # overloads in subclasses (mypy does't allow typing self: subclass)
-        # Union[IterableList['Commit'], IterableList['Submodule'], IterableList[Union['Submodule', 'Tree', 'Blob']]]
+        if not as_edge:
+            out: IterableList[Union['Commit', 'Submodule', 'Tree', 'Blob']] = IterableList(id)
+            out.extend(self.traverse(as_edge=as_edge, *args, **kwargs))  # type: ignore
+            return out
+            # overloads in subclasses (mypy does't allow typing self: subclass)
+            # Union[IterableList['Commit'], IterableList['Submodule'], IterableList[Union['Submodule', 'Tree', 'Blob']]]
+        else:
+            # Raise deprecationwarning, doesn't make sense to use this
+            out_list: IterableList = IterableList(self.traverse(*args, **kwargs))
+            return out_list  # type: ignore
 
-        # NOTE: if is_edge=True, self.traverse returns a Tuple, so should be prevented or flattened?
-        kwargs['as_edge'] = False
-        out.extend(self.traverse(*args, **kwargs))  # type: ignore
-        return out
-
-    @abstractmethod
+    @ abstractmethod
     def traverse(self, *args, **kwargs) -> Any:
         """ """
         # Raise Deprecation warning here, should be using this
