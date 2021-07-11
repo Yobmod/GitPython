@@ -1066,7 +1066,7 @@ class Iterable(object):
         return out_list
 
     @classmethod
-    def iter_items(cls, repo: 'Repo', *args: Any, **kwargs: Any):
+    def iter_items(cls, repo: 'Repo', *args: Any, **kwargs: Any) -> Any:
         # return typed to be compatible with subtypes e.g. Remote
         """For more information about the arguments, see list_items
         :return:  iterator yielding Items"""

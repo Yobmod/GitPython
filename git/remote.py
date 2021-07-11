@@ -435,6 +435,11 @@ class FetchInfo(IterableObj, object):
 
         return cls(remote_local_ref, flags, note, old_commit, local_remote_ref)
 
+    @classmethod
+    def iter_items(cls, repo: 'Repo', *args: Any, **kwargs: Any
+                   ) -> NoReturn:  # -> Iterator['FetchInfo']:
+        raise NotImplementedError
+
 
 class Remote(LazyMixin, IterableObj):
 
