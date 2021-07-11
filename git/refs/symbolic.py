@@ -21,6 +21,9 @@ import os.path as osp
 
 from .log import RefLog
 
+from typing import Union
+from git.types import Commit_ish
+
 __all__ = ["SymbolicReference"]
 
 
@@ -344,7 +347,7 @@ class SymbolicReference(object):
 
     # aliased reference
     reference = property(_get_reference, set_reference, doc="Returns the Reference we point to")
-    ref = reference
+    ref: Union[Commit_ish] = reference     # type: ignore  # Union[str, Commit_ish, SymbolicReference]
 
     def is_valid(self):
         """

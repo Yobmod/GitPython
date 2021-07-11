@@ -11,6 +11,7 @@ from git.types import Commit_ish
 
 if TYPE_CHECKING:
     from git.repo import Repo
+    from git.objects import Commit
 
 __all__ = ["HEAD", "Head"]
 
@@ -33,7 +34,7 @@ class HEAD(SymbolicReference):
         if path != self._HEAD_NAME:
             raise ValueError("HEAD instance must point to %r, got %r" % (self._HEAD_NAME, path))
         super(HEAD, self).__init__(repo, path)
-        self.commit: 'Commit_ish'
+        self.commit: 'Commit'
 
     def orig_head(self) -> 'SymbolicReference':
         """
