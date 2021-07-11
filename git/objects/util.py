@@ -302,6 +302,7 @@ class Traversable(Protocol):
     """
     __slots__ = ()
 
+    @abstractmethod
     @classmethod
     def _get_intermediate_items(cls, item) -> Sequence['Traversable']:
         """
@@ -316,7 +317,12 @@ class Traversable(Protocol):
         raise NotImplementedError("To be implemented in subclass")
 
     @abstractmethod
-    def list_traverse(self, *args: Any, **kwargs: Any) -> IterableList[Union['Commit', 'Submodule', 'Tree', 'Blob']]:
+    def list_traverse(self, *args: Any, **kwargs: Any) -> Any:
+        """ """
+        # Raise deprecation warning here, will change to NotImplemented
+        return self._list_traverse(*args, **kwargs)
+
+    def _list_traverse(self, *args: Any, **kwargs: Any) -> IterableList[Union['Commit', 'Submodule', 'Tree', 'Blob']]:
         """
         :return: IterableList with the results of the traversal as produced by
             traverse()
@@ -342,13 +348,18 @@ class Traversable(Protocol):
         return out
 
     @abstractmethod
-    def traverse(self,
-                 predicate: Callable[[Union['Traversable', 'Blob', TraversedTup], int], bool] = lambda i, d: True,
-                 prune: Callable[[Union['Traversable', 'Blob', TraversedTup], int], bool] = lambda i, d: False,
-                 depth: int = -1, branch_first: bool = True, visit_once: bool = True,
-                 ignore_self: int = 1, as_edge: bool = False
-                 ) -> Union[Iterator[Union['Traversable', 'Blob']],
-                            Iterator[TraversedTup]]:
+    def traverse(self, *args, **kwargs) -> Any:
+        """ """
+        # Raise Deprecation warning here, should be using this
+        return self._traverse(*args, **kwargs)
+
+    def _traverse(self,
+                  predicate: Callable[[Union['Traversable', 'Blob', TraversedTup], int], bool] = lambda i, d: True,
+                  prune: Callable[[Union['Traversable', 'Blob', TraversedTup], int], bool] = lambda i, d: False,
+                  depth: int = -1, branch_first: bool = True, visit_once: bool = True,
+                  ignore_self: int = 1, as_edge: bool = False
+                  ) -> Union[Iterator[Union['Traversable', 'Blob']],
+                             Iterator[TraversedTup]]:
         """:return: iterator yielding of items found when traversing self
         :param predicate: f(i,d) returns False if item i at depth d should not be included in the result
 
@@ -439,7 +450,7 @@ class Traversable(Protocol):
         # END for each item on work stack
 
 
-@runtime_checkable
+@ runtime_checkable
 class Serializable(Protocol):
 
     """Defines methods to serialize and deserialize objects from and into a data stream"""
@@ -464,8 +475,8 @@ class TraversableIterableObj(IterableObj, Traversable):
 
     TIobj_tuple = Tuple[Union[T_TIobj, None], T_TIobj]
 
-    def list_traverse(self: T_TIobj, *args: Any, **kwargs: Any) -> IterableList[T_TIobj]:  # type: ignore[override]
-        return super(TraversableIterableObj, self).list_traverse(* args, **kwargs)
+    def list_traverse(self: T_TIobj, *args: Any, **kwargs: Any) -> IterableList[T_TIobj]:
+        return super(TraversableIterableObj, self)._list_traverse(* args, **kwargs)
 
     @ overload                     # type: ignore
     def traverse(self: T_TIobj,
@@ -527,6 +538,6 @@ class TraversableIterableObj(IterableObj, Traversable):
         """
         return cast(Union[Iterator[T_TIobj],
                           Iterator[Tuple[Union[None, T_TIobj], T_TIobj]]],
-                    super(TraversableIterableObj, self).traverse(
+                    super(TraversableIterableObj, self)._traverse(
                         predicate, prune, depth, branch_first, visit_once, ignore_self, as_edge  # type: ignore
         ))
