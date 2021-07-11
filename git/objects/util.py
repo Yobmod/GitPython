@@ -21,10 +21,10 @@ import calendar
 from datetime import datetime, timedelta, tzinfo
 
 # typing ------------------------------------------------------------
-from typing import (Any, Callable, Deque, Iterator, NamedTuple, Protocol, overload, Sequence,
-                    TYPE_CHECKING, Tuple, Type, TypeVar, Union, cast, runtime_checkable)
+from typing import (Any, Callable, Deque, Iterator, NamedTuple, overload, Sequence,
+                    TYPE_CHECKING, Tuple, Type, TypeVar, Union, cast)
 
-from git.types import Has_id_attribute, Literal
+from git.types import Has_id_attribute, Literal, Protocol, runtime_checkable
 
 if TYPE_CHECKING:
     from io import BytesIO, StringIO

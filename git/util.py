@@ -29,8 +29,8 @@ import warnings
 # typing ---------------------------------------------------------
 
 from typing import (Any, AnyStr, BinaryIO, Callable, Dict, Generator, IO, Iterator, List,
-                    Optional, Pattern, Protocol, Sequence, Tuple, TypeVar, Union, cast,
-                    TYPE_CHECKING, overload, runtime_checkable)
+                    Optional, Pattern, Sequence, Tuple, TypeVar, Union, cast,
+                    TYPE_CHECKING, overload, )
 
 import pathlib
 
@@ -41,8 +41,8 @@ if TYPE_CHECKING:
     # from git.objects.base import IndexObject
 
 
-from .types import (Literal, SupportsIndex,                    # because behind py version guards
-                    PathLike, HSH_TD, Total_TD, Files_TD,       # aliases
+from .types import (Literal, SupportsIndex, Protocol, runtime_checkable,              # because behind py version guards
+                    PathLike, HSH_TD, Total_TD, Files_TD,                            # aliases
                     Has_id_attribute)
 
 T_IterableObj = TypeVar('T_IterableObj', bound=Union['IterableObj', 'Has_id_attribute'], covariant=True)
