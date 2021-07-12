@@ -63,17 +63,21 @@ jobs:
           # --cov-report=term-missing:skip-covered
         continue-on-error: true
 
-      - name: Test with nose
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.9'
-        run: |
-          set -x
-          pip install nose
-          nosetests -v --with-coverage
-
       - name: Documentation
         run: |
           set -x
           pip install -r doc/requirements.txt
           make -C doc html
+
+      - name: Setup up python < 3.10 for Nose
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Test with Nose for py < 3.10
+        run: |
+          set -x
+          pip install nose
+          nosetests -v --with-coverage
+
+
