@@ -1,0 +1,6 @@
+-r test-requirements.txt
+
+pytest
+pytest-cov
+pytest-sugar
+pytest-icdiff

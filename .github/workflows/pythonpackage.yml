@@ -47,18 +47,29 @@ jobs:
         pip install flake8
         # stop the build if there are Python syntax errors or undefined names
         flake8 --ignore=W293,E265,E266,W503,W504,E704,E731 --count  --show-source --statistics
+
     - name: Check types with mypy
       run: |
         set -x
         pip install tox
         tox -e type
+
     - name: Test with nose
       run: |
         set -x
         pip install nose
         nosetests -v --with-coverage
+
     - name: Documentation
       run: |
         set -x
         pip install -r doc/requirements.txt
         make -C doc html
+
+    - name: Test with pytest
+      run: |
+        set -x
+        pip install -r requirements-dev.txt
+        pytest
+        # pytest settings in tox.ini[pytest]
+      continue-on-error: true
