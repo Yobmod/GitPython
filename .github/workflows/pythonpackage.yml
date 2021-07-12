@@ -51,8 +51,10 @@ jobs:
     - name: Check types with mypy
       run: |
         set -x
-        pip install tox
-        tox -e type
+        # pip install tox
+        # tox -e type
+        pip install mypy
+        mypy -p git
 
     - name: Test with nose
       run: |
