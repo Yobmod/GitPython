@@ -1,6 +1,7 @@
 ddt>=1.1.1
 coverage
 flake8
+# flake8-type-checking;python_version>"3.6"
 tox
 virtualenv
 nose
