@@ -64,12 +64,14 @@ jobs:
         continue-on-error: true
 
       - name: Test with nose
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
         run: |
           set -x
           pip install nose
           nosetests -v --with-coverage
-        with:
-          python-version: '3.9'
+
       - name: Documentation
         run: |
           set -x
