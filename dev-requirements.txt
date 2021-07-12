@@ -3,7 +3,7 @@ coverage
 flake8
 flake8-type-checking;python_version>="3.8"
 tox
-mypy>=3.9
+mypy
 # virtualenv
 nose
 pytest
