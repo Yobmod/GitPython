@@ -99,7 +99,7 @@ setup(
     package_dir={'git': 'git'},
     python_requires='>=3.6',
     install_requires=requirements,
-    tests_require=test_requirements,
+    tests_require=requirements + test_requirements,
     zip_safe=False,
     long_description="""GitPython is a python library used to interact with Git repositories""",
     classifiers=[
