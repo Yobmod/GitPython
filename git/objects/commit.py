@@ -45,7 +45,7 @@ from git.types import PathLike, TypeGuard
 
 if TYPE_CHECKING:
     from git.repo import Repo
-    from git import SymbolicReference
+    from git.refs import SymbolicReference
 
 # ------------------------------------------------------------------------
 
