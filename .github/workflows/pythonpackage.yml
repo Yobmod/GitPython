@@ -61,12 +61,15 @@ jobs:
           pytest --cov --cov-report=term-missing:skip-covered
           # --cov-report=html:test/coverage
           # --cov-report=term-missing:skip-covered
+        continue-on-error: true
 
       - name: Test with nose
         run: |
           set -x
           pip install nose
           nosetests -v --with-coverage
+        with:
+          python-version: '3.9'
       - name: Documentation
         run: |
           set -x
