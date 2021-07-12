@@ -6,8 +6,8 @@ except ImportError:
     use_setuptools()
     from setuptools import setup, find_packages
 
-# from distutils.command.build_py import build_py as _build_py
-from setuptools.command.sdist import sdist as _sdist, build_py as _build_py
+from setuptools.command.build_py import build_py as _build_py
+from setuptools.command.sdist import sdist as _sdist
 import fnmatch
 import os
 import sys
