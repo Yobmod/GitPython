@@ -551,7 +551,7 @@ class Repo(object):
             return self.head.commit.tree
         return self.rev_parse(str(rev) + "^{tree}")
 
-    def iter_commits(self, rev: Union[str, Commit, SymbolicReference, None] = None,
+    def iter_commits(self, rev: Union[str, Commit, 'SymbolicReference', None] = None,
                      paths: Union[PathLike, Sequence[PathLike]] = '',
                      **kwargs: Any) -> Iterator[Commit]:
         """A list of Commit objects representing the history of a given ref/commit
