@@ -5,7 +5,6 @@
 # the BSD License: http://www.opensource.org/licenses/bsd-license.php
 import datetime
 from subprocess import Popen
-from git import SymbolicReference
 from gitdb import IStream
 from git.util import (
     hex_to_bin,
@@ -46,6 +45,7 @@ from git.types import PathLike, TypeGuard
 
 if TYPE_CHECKING:
     from git.repo import Repo
+    from git import SymbolicReference
 
 # ------------------------------------------------------------------------
 
@@ -243,7 +243,7 @@ class Commit(base.Object, TraversableIterableObj, Diffable, Serializable):
         return self.repo.git.name_rev(self)
 
     @classmethod
-    def iter_items(cls, repo: 'Repo', rev: Union[str, 'Commit', SymbolicReference],        # type: ignore
+    def iter_items(cls, repo: 'Repo', rev: Union[str, 'Commit', 'SymbolicReference'],        # type: ignore
                    paths: Union[PathLike, Sequence[PathLike]] = '', **kwargs: Any
                    ) -> Iterator['Commit']:
         """Find all commits matching the given criteria.

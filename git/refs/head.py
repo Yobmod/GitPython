@@ -42,7 +42,7 @@ class HEAD(SymbolicReference):
             to contain the previous value of HEAD"""
         return SymbolicReference(self.repo, self._ORIG_HEAD_NAME)
 
-    def reset(self, commit: Union[Commit_ish, SymbolicReference, str] = 'HEAD', index=True, working_tree=False,
+    def reset(self, commit: Union[Commit_ish, 'SymbolicReference', str] = 'HEAD', index=True, working_tree=False,
               paths=None, **kwargs):
         """Reset our HEAD to the given commit optionally synchronizing
         the index and working tree. The reference we refer to will be set to
