@@ -68,12 +68,9 @@ jobs:
           pip install nose
           nosetests -v --with-coverage
         with:
-            python-version: [3.6, 3.7, 3.8, 3.9]
-            fail_ci_if_error: true
-    - uses: codecov/codecov-action@v1
-      with:
-        file: ./coverage.xml
-        fail_ci_if_error: true
+          python-version: [3.6, 3.7, 3.8, 3.9]
+          fail_ci_if_error: true
+
       - name: Documentation
         run: |
           set -x
